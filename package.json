@@ -10,13 +10,14 @@
   "type": "git",
   "url": ""
 },
-  "author": "",
+  "keywords": [
+    "sockets",
+    "node"
+  ],
+  "author": "Nicholas Bezinovich",
   "license": "ISC",
-  "bugs": {
-  "url": ""
   "dependencies": {
-    "express": "^4.13.4",
-    "socket.io": "^1.4.5"
+    "express": "^4.13.4"
   }
 },
   "homepage": ""
