@@ -1,12 +1,8 @@
-const http = require('http');
-const port = process.env.PORT || 3000
+var express = require('express');
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/html');
-  res.end('<h1>Online Pong Version 0.1</h1>');
-});
+var app = express();
+var server = app.listen(3000);
 
-server.listen(port,() => {
-  console.log(`Server running at port `+port);
-});
+app.use(express.static('Public'));
+
+
