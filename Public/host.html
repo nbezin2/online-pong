@@ -19,11 +19,11 @@
     var gameCode;
     
     function roomSetUp() {
-      var roomCode = "";
-      while (roomCode.length) {
-        roomCode = document.getElementById("roomName");
+      var roomCode = document.getElementById("roomName");
+      if (roomCode.length > 0) {
+        gameCode = sessionStorage.setItem("gameCode", roomCode);
       }
-      gameCode = sessionStorage.setItem("gameCode", roomCode);
+      
     }
     
   </script>
