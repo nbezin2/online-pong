@@ -8,7 +8,7 @@ var ctx = canvas.getContext("2d");
 
 
 //Global Variables
-var mainM = new Menu();
+//var mainM = new Menu();
 var p1 = new Paddle(0, (canvas.height/2) - 30, 0, 20, 60);
 var p2 = new Paddle(canvas.width - 20, (canvas.height/2) - 30, 0, 20, 60);
 var ball = new Ball((canvas.width/2)-5, (canvas.height/2)-5, 2, 3, 10);
@@ -17,7 +17,7 @@ var p1U = false, p1D = false, p2U = false, p2D = false;
 //keyDown and keyUp Handlers
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
-document.getElementById("myCanvas").addEventListener("click", mouseClick, false);
+/*document.getElementById("myCanvas").addEventListener("click", mouseClick, false);
 
 function mouseClick(e) {
   console.log("X Pos: " + e.clientX);
@@ -32,7 +32,7 @@ function mouseClick(e) {
       }
     }
   }
-}
+}*/
 
 
 function keyDownHandler(e) {
@@ -122,19 +122,17 @@ function getInput() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (mainM.getMode() == -1) {
-    getInput();
-    checkHit();
-    p1.show();
-    p2.show();
-    p1.update();
-    p2.update();
-    ball.show();
-    ball.update();
-  }
-  else {
-    mainM.show();
-  }
+  getInput();
+  checkHit();
+  
+  p1.show();
+  p2.show();
+  ball.show();
+  
+  p1.update();
+  p2.update();
+  ball.update();
+  
   console.log(mainM.getMode());
 }
 
