@@ -19,7 +19,7 @@
     var gameCode;
     
     function roomSetUp() {
-      var roomCode = document.getElementById("roomName");
+      var roomCode = document.getElementById("roomName").value;
       if (roomCode.length > 0) {
         gameCode = sessionStorage.setItem("gameCode", roomCode);
       }
