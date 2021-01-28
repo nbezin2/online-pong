@@ -13,11 +13,10 @@ const io = socketIO(server);
 io.on('connection', newConnection);
 
 function newConnection(socket) {
-  socketIO.on('connStuff', connStuff);
-  function connStuff(data) {
-    console.log(socket.id);
-    io.broadcast.emit('connStuff', socket.id);
-  }
+  
+  console.log(socket.id);
+  io.broadcast.emit('connStuff', socket.id);
+
 }
 
 
