@@ -24,10 +24,21 @@
 </form>
     
 
-<input type="submit" value="Check Conn"/>
+<button onclick="checkConn()">Check Conn</button>
 <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script> 
     var socket = io.connect(window.location.hostname);
+    socket.on('connStuff', connFun);
+    
+    function connFun(data) {
+        console.log(data);
+    }
+    
+    
+    function checkConn() {
+        socket.emit('connStuff', 1)
+    }
+    
 </script>
     
 </body>
