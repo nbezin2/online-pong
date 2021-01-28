@@ -12,5 +12,10 @@ var io = socket(server);
 io.sockets.on('connection', newConnection);
 
 function newConnection(socket) {
-  console.log(socket.id);
+  
+  
+  socket.on('conn', connStuff);
+  function connStuff(data) {
+    socket.broadcast.emit('mess', socket.id);
+  }
 }
