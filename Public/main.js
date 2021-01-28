@@ -2,12 +2,6 @@ var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
 
-
-//Socket Stuff
-io.connect('nb-online-pong.herokuapp.com');
-
-
-
 //Global Variables
 //var mainM = new Menu();
 var p1 = new Paddle(0, (canvas.height/2) - 30, 0, 20, 60);
