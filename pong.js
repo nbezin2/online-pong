@@ -14,8 +14,8 @@ io.sockets.on('connection', newConnection);
 function newConnection(socket) {
   
   
-  socket.on('conn', connStuff);
+  socket.on('connStuff', connStuff);
   function connStuff(data) {
-    socket.broadcast.emit('mess', socket.id);
+    socket.broadcast.emit('connStuff', socket.id);
   }
 }
