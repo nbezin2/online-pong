@@ -15,7 +15,7 @@ io.on('connection', newConnection);
 function newConnection(socket) {
   
   console.log(socket.id);
-  socketIO.broadcast.emit('connStuff', socket.id);
+  io.socketIO.broadcast.emit('connStuff', 1);
 
 }
 
