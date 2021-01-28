@@ -4,7 +4,7 @@ var ctx = canvas.getContext("2d");
 
 
 //Socket Stuff
-var socket = io.connect('nb-online-pong.herokuapp.com');
+io.connect('nb-online-pong.herokuapp.com');
 
 
 
