@@ -13,9 +13,17 @@ const io = socketIO(server);
 io.on('connection', newConnection);
 
 
+//Hash set of all connected clients
+var clientDict = {};
+var numClients = 0;
+//Hash set of all created rooms
+var gameRoomDict = {};
+
 function newConnection(socket) {
+  numClients++;
+  clientDict[socket.id] = numClients;
+  console.log(clientDict);
   
-  console.log(socket.id);
   
   
   
