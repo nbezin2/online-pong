@@ -25,22 +25,16 @@
 
 
     
-<script type="text/javascript" src="/Public/Paddle.js"></script>
-<script type="text/javascript" src="/Public/Ball.js"></script>
+<script type="text/javascript" src="Paddle.js"></script>
+<script type="text/javascript" src="Ball.js"></script>
 
 
 <script type="text/javascript"> 
     //<script type="text/javascript" src="/Public/Menu.js"
     var socket = io.connect(window.location.hostname);
-    socket.on('connStuff', connFun);
 
     function connFun(data) {
         console.log(data);
-    }
-    
-    
-    function checkConn() {
-        socket.emit('connStuff', 1)
     }
 
     function startLocalGame() {
@@ -61,7 +55,7 @@
     
 </script>
     
-<script type="text/javascript" src="/Public/main.js"></script>    
+<script type="text/javascript" src="main.js"></script>    
 
 </body>
 </html>
