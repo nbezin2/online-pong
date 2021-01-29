@@ -11,20 +11,15 @@
 <body>
 <h1>ONLINE PONG</h1>
 
-<form action="./game.html">
-    <input type="submit" value="Local Game"/>
-</form>
+<label for="rName">Room:</label>
+<input type="text" id="rName" name="rName"><br>
     
-<form action="./join.html">
-    <input type="submit" value="Join Game"/>
-</form>
-    
-<form action="./host.html">
-    <input type="submit" value="Host Game"/>
-</form>
-    
-
+<button onclick="startLocalGame()">Local Game</button>
+<button onclick="joinGame()">Check Conn</button>
+<button onclick="createGame()">Check Conn</button>
 <button onclick="checkConn()">Check Conn</button>
+
+
 <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
 <canvas id="myCanvas" width="480" height="320"></canvas>
@@ -36,8 +31,21 @@
 <script src="clientCon.js"></script>
 
 <script> 
+    function startLocalGame() {
     
+    }
     
+    function joinGame() {
+    
+    }
+    
+    function createGame() {
+    
+    }
+    
+    function checkConn() {
+    
+    }
     
 </script>
     
