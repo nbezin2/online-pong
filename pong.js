@@ -12,6 +12,17 @@ const io = socketIO(server);
 
 io.on('connection', newConnection);
 
+io.on('joinG', joinGame);
+io.on('hostG', hostGame);
+
+function joinGame(data) {
+  console.log(data);
+}
+
+function hostGame(data) {
+  console.log(data);
+}
+
 function newConnection(socket) {
   
   console.log(socket.id);
