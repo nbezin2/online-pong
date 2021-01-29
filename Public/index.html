@@ -31,7 +31,7 @@
 
 <script type="text/javascript"> 
     //<script type="text/javascript" src="/Public/Menu.js"
-    var socket = io.connect(window.location.hostname);
+    var socket = io()//.connect(window.location.hostname);
 
     function connFun(data) {
         console.log(data);
@@ -42,10 +42,12 @@
     }
     
     function joinGame() {
+        socket.emit('joinG', "Attempt to Join");
         console.log("");
     }
     
     function createGame() {
+        socket.emit('hostG', "Attempt to Host");
         console.log("");
     }
     
