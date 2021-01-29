@@ -12,7 +12,6 @@ socket.on('connStuff', connFun);
 
 function connFun(data) {
     console.log(data);
-    checkConn();
 }
     
     
