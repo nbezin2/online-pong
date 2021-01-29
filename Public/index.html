@@ -29,25 +29,34 @@
 <script type="text/javascript" src="/Public/Ball.js"></script>
 
 
-<script type="text/javascript" src="/Public/clientCon.js"></script>
-
 <script type="text/javascript"> 
     //<script type="text/javascript" src="/Public/Menu.js"
+    var socket = io.connect(window.location.hostname);
+    socket.on('connStuff', connFun);
+
+    function connFun(data) {
+        console.log(data);
+    }
     
+    
+    function checkConn() {
+        socket.emit('connStuff', 1)
+    }
+
     function startLocalGame() {
-    
+        console.log("");
     }
     
     function joinGame() {
-    
+        console.log("");
     }
     
     function createGame() {
-    
+        console.log("");
     }
     
     function checkConn() {
-    
+        console.log("");
     }
     
 </script>
