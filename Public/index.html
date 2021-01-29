@@ -26,28 +26,18 @@
 
 <button onclick="checkConn()">Check Conn</button>
 <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+<canvas id="myCanvas" width="480" height="320"></canvas>
+    
+<script src="Paddle.js"></script>
+<script src="Ball.js"></script>
+<script src="Menu.js"></script>
+<script src="main.js"></script>
+<script src="serverCon.js"></script>
+
 <script> 
     
-    /*var socket = io();
-    var el;
     
-    socket.on('time', function(timeString) {
-        el = document.getElementById('server-time')
-        el.innerHTML = 'Server time: ' + timeString;
-    });*/
-    
-    
-    var socket = io.connect(window.location.hostname);
-    socket.on('connStuff', connFun);
-    
-    function connFun(data) {
-        console.log(data);
-    }
-    
-    
-    function checkConn() {
-        socket.emit('connStuff', 1)
-    }
     
 </script>
     
