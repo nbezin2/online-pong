@@ -22,14 +22,299 @@
 <canvas id="myCanvas" width="480" height="320"></canvas>
     
 <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  
+<script type="text/javascript">
+    //Paddle Class Code
+    class Paddle {
+        constructor(x, y, dy, w, h) {
+            this.x = x;
+            this.y = y;
+            this.dx = 0;
+            this.dy = dy;
+            this.w = w;
+            this.h = h;
 
+        }
 
+        Up() {
+            this.dy = -3;
+        }
+
+        Down() {
+            this.dy = 3;
+        }
+
+        Stuck() {
+            this.dy = 0;
+        }
+
+        setDY(dy) {
+            this.dy = dy;
+        }
+
+        getH() {
+            return this.h;
+        }
+
+        getW() {
+            return this.w;
+        }
+
+        getY() {
+            return this.y;
+        }
+
+        getX() {
+            return this.x;
+        }
+
+        hit() {
+
+        }
+
+        update() {
+            if ((this.y + this.h <= canvas.height && this.dy >= 0) || 
+                (this.y >= 0 && this.dy <= 0))
+                this.y += this.dy;
+        }
+
+        show() {
+            ctx.beginPath();
+            ctx.fillStyle = "blue";
+            ctx.fill();
+            ctx.fillRect(this.x, this.y, this.w, this.h);
+            ctx.closePath()
+        }
+
+    }  
+</script>
     
-<script type="text/javascript" src="Paddle.js"></script>
-<script type="text/javascript" src="Ball.js"></script>
+<script type="text/javascript">
+    //Ball Class Code
+    class Ball {
+        constructor(x, y, dx, dy, d) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.w = d;
+            this.h = d;
+
+        }
+
+        goal() {
+            this.x = (canvas.width/2)-5;
+            this.y = (canvas.height/2)-5;
+            if (this.dx > 0) {
+                this.dx = -2;
+            }
+            else {
+                this.dx = 2;
+            }
+            if (this.dy > 0) {
+                this.dy = 3;
+            }
+            else {
+                this.dy = -3;
+            } 
+        }
+
+        setX(x) {
+            this.x = x;
+        }
+
+        getH() {
+            return this.h;
+        }
+
+        getW() {
+            return this.w;
+        }
+
+        getY() {
+            return this.y;
+        }
+
+        getX() {
+            return this.x;
+        }
+
+        hit(pY, pX, pH, pW) {
+            var padTop = pY;
+            var padBot = pY + pH;
+            var padMid = (pH / 2) + pY;
+            var ballC = (this.h / 2) + this.y;
+            if (ballC <= padMid) {
+                console.log("Hit Top Half");
+                this.dy = -5 + ((ballC-padTop)*(5 - 0) / (padMid-padTop) + 0);
+            }
+            else if (ballC > padMid) {
+                console.log("Hit Bottom Half");
+                this.dy = ((ballC-padMid)*(5 - 0) / (padBot-padMid) + 0);
+            }
+
+            if (this.dx < 10 && this.dx > -10) {
+                this.dx *= -1.2;
+            }
+            else {
+                this.dx *= -1;
+            }
+
+        }
+
+        update() {
+            if (this.x <= 0-this.w) {
+                this.goal();
+            }
+            if (this.x+this.w >= canvas.width+this.w) {
+                this.goal();
+            }
+            if (this.y <= 0) {
+                this.y = 0;
+                this.dy *= -1;
+            }
+            if (this.y+this.h >= canvas.height) {
+                this.y = canvas.height-this.h;
+                this.dy *= -1;
+            }
+
+            this.x += this.dx;
+            this.y += this.dy;
+        }
+
+        show() {
+            ctx.beginPath();
+            ctx.fillStyle = "black";
+            ctx.fill();
+            ctx.fillRect(this.x, this.y, this.w, this.h);
+            ctx.closePath()
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    //Main Pong Game Code
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
 
 
+    //Global Variables
+    //var mainM = new Menu();
+    var p1 = new Paddle(0, (canvas.height/2) - 30, 0, 20, 60);
+    var p2 = new Paddle(canvas.width - 20, (canvas.height/2) - 30, 0, 20, 60);
+    var ball = new Ball((canvas.width/2)-5, (canvas.height/2)-5, 2, 3, 10);
+    var p1U = false, p1D = false, p2U = false, p2D = false;
+
+    //keyDown and keyUp Handlers
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+
+    function keyDownHandler(e) {
+      if (e.key == "w" && p1U == false) {
+        p1U = true;
+        p1D = false;
+      }
+      if (e.key == "s" && p1D == false) {
+        p1D = true;
+        p1U = false;
+      }
+
+      if (e.key == "ArrowUp" && p2U == false) {
+        p2U = true;
+        p2D = false;
+      }
+
+      if (e.key == "ArrowDown" && p2D == false) {
+        p2D = true;
+        p2U = false;
+      }
+    }
+
+    function keyUpHandler(e) {
+      if (e.key == "w") {
+        p1U = false;
+      }
+
+      if (e.key == "s") {
+        p1D = false;
+      }
+
+      if (e.key == "ArrowUp") {
+        p2U = false;
+      }
+
+      if (e.key == "ArrowDown") {
+        p2D = false;
+      }
+    }
+
+    //Check Paddle Collision
+    function checkHit() {
+      //Left Paddle Collision
+      if ((ball.getX() <= p1.getX()+p1.getW() && ball.getX() + ball.getW() >= p1.getX() + p1.getW()) && 
+        (ball.getY() < p1.getY()+p1.getH() && ball.getY()+ball.getH() > p1.getY())) {
+        ball.setX(p1.getX() + p1.getW())
+        ball.hit(p1.getY(), p1.getX(), p1.getH(), p1.getW());
+      }
+
+      //Right Paddle Collision
+      if ((ball.getX() + ball.getW() >= p2.getX() && ball.getX() <= p2.getX()) && 
+        (ball.getY() < p2.getY()+p2.getH() && ball.getY()+ball.getH() > p2.getY())) {
+        ball.setX(p2.getX() - ball.getW());
+        ball.hit(p2.getY(), p2.getX(), p2.getH(), p2.getW());
+      }
+    }
+
+    function getInput() {
+
+      if (p1U && p1D) {
+        p1.Stuck();
+      }
+      else if (p1U) {
+        p1.Up();
+      }
+      else if (p1D) {
+        p1.Down();
+      }
+      else {
+        p1.Stuck();
+      }
+
+      if (p2U && p2D) {
+        p2.Stuck();
+      }
+      else if (p2U) {
+        p2.Up();
+      }
+      else if (p2D) {
+        p2.Down();
+      }
+      else {
+        p2.Stuck();
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      getInput();
+      checkHit();
+
+      p1.show();
+      p2.show();
+      ball.show();
+
+      p1.update();
+      p2.update();
+      ball.update();
+
+      console.log(mainM.getMode());
+    }
+
+    setInterval(draw, 10);
+</script>  
+    
 <script type="text/javascript"> 
+    //CLIENT SOCKET CODE
     //<script type="text/javascript" src="/Public/Menu.js"
     var socket = io()//.connect(window.location.hostname);
 
@@ -57,7 +342,7 @@
     
 </script>
     
-<script type="text/javascript" src="main.js"></script>    
+  
 
 </body>
 </html>
