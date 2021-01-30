@@ -13,29 +13,42 @@ const io = socketIO(server);
 io.on('connection', newConnection);
 
 
-//Hash set of all connected clients
-var clientDict = {};
-var numClients = 0;
-//Hash set of all created rooms
+var sockID;
+//Dictionary of all created rooms and the clients in it
 var gameRoomDict = {};
 
 function newConnection(socket) {
-  numClients++;
-  clientDict[socket.id] = numClients;
-  console.log(clientDict);
+  sockID = socket.id;
+  
   
   
   
   
   socket.on('joinG', joinGame);
   socket.on('hostG', hostGame);
-
+  
+  //data should be in the form of: roomName
   function joinGame(data) {
-    console.log(data);
+    
+    //Check if room exists
+    if (data in gameRoomDict) {
+      console.log("You have joined the lobby named: " + data)
+      gameRoomDict.data = [gameRoomDict[data], socketID];
+      console.log(gameRoomDict[data]);
+    }
+    else {
+      console.log(data + " does not exist in the list of current lobbies.);
+    }
   }
-
+  
+  //data should be in the form of: roomName
   function hostGame(data) {
-    console.log(data);
+    
+    if () {
+      gameRoomDict[data] = [];    
+    }
+    
+    
   }
 
   
