@@ -18,7 +18,7 @@ var sockID;
 var gameRoomDict = {};
 
 function newConnection(socket) {
-  sockID = socket.id;
+  
   
   
   
@@ -34,7 +34,7 @@ function newConnection(socket) {
     if (data in gameRoomDict) {
       if (gameRoomDict.data.length < 2) {
         console.log("You have joined the lobby named: " + data)
-        gameRoomDict.data = [gameRoomDict[data], socketID];
+        gameRoomDict.data = [gameRoomDict[data], socket.id];
         console.log(gameRoomDict[data]);
       }
       else {
