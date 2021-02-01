@@ -325,12 +325,12 @@
     }
     
     function joinGame() {
-        socket.emit('joinG', "Attempt to Join");
+        socket.emit('joinG', document.getElementById("rName").value);
         console.log("");
     }
     
     function createGame() {
-        socket.emit('hostG', "Attempt to Host");
+        socket.emit('hostG', document.getElementById("rName").value);
         console.log("");
     }
     
