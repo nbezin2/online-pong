@@ -23,7 +23,7 @@ function newConnection(socket) {
   
   
   
-  
+  //Connecting players
   socket.on('joinG', joinGame);
   socket.on('hostG', hostGame);
   
@@ -32,9 +32,14 @@ function newConnection(socket) {
     
     //Check if room exists
     if (data in gameRoomDict) {
-      console.log("You have joined the lobby named: " + data)
-      gameRoomDict.data = [gameRoomDict[data], socketID];
-      console.log(gameRoomDict[data]);
+      if (gameRoomDict.data.length < 2) {
+        console.log("You have joined the lobby named: " + data)
+        gameRoomDict.data = [gameRoomDict[data], socketID];
+        console.log(gameRoomDict[data]);
+      }
+      else {
+        console.log("Sorry this room is full");
+      }
     }
     else {
       console.log(data + " does not exist in the list of current lobbies.);
@@ -44,10 +49,12 @@ function newConnection(socket) {
   //data should be in the form of: roomName
   function hostGame(data) {
     
-    if () {
-      gameRoomDict[data] = [];    
+    if (data in gameRoomDict) {
+      console.log(data + " is already a game room.");   
     }
-    
+    else {
+      gameRoomDict[data] = [socket.id];    
+    }
     
   }
 
