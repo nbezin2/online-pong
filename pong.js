@@ -54,7 +54,7 @@ function newConnection(socket) {
     }
     else {
       gameRoomDict[data] = [socket.id];  
-      socket.broadcast.to(socket.id).emit('connected', data);
+      io.emit('connected', data);
     }
     
   }
