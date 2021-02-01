@@ -13,7 +13,6 @@ const io = socketIO(server);
 io.on('connection', newConnection);
 
 
-var sockID;
 //Dictionary of all created rooms and the clients in it
 var gameRoomDict = {};
 
@@ -35,6 +34,7 @@ function newConnection(socket) {
       if (gameRoomDict[data].length < 2) {
         console.log("You have joined the lobby named: " + data);
         gameRoomDict.data = gameRoomDict[data].push(socket.id);
+        socket.broadcast.to(socket.id).emit('connected', data);
         console.log(gameRoomDict[data]);
       }
       else {
@@ -53,7 +53,8 @@ function newConnection(socket) {
       console.log(data + " is already a game room.");   
     }
     else {
-      gameRoomDict[data] = [socket.id];    
+      gameRoomDict[data] = [socket.id];  
+      socket.broadcast.to(socket.id).emit('connected', data);
     }
     
   }
