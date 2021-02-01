@@ -14,6 +14,8 @@
 <label for="rName">Room:</label>
 <input type="text" id="rName" name="rName" maxlength=10><br>
     
+<h2 id="gameRoom">Game Room: Local</h2>
+    
 <button onclick="startLocalGame()">Local Game</button>
 <button onclick="joinGame()">Join Game</button>
 <button onclick="createGame()">Create Game</button>
@@ -315,7 +317,13 @@
     //CLIENT SOCKET CODE
     //<script type="text/javascript" src="/Public/Menu.js"
     var socket = io.connect(window.location.hostname);
-
+    
+    socket.on('connected', connected);
+    
+    function connected(data) {
+        document.getElementById("gameRoom").innerHTML = "Game Room: " + data;
+    }
+    
     function connFun(data) {
         console.log(data);
     }
