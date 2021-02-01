@@ -314,7 +314,7 @@
 <script type="text/javascript"> 
     //CLIENT SOCKET CODE
     //<script type="text/javascript" src="/Public/Menu.js"
-    var socket = io()//.connect(window.location.hostname);
+    var socket = io.connect(window.location.hostname);
 
     function connFun(data) {
         console.log(data);
