@@ -42,7 +42,7 @@ function newConnection(socket) {
       }
     }
     else {
-      console.log(data + " does not exist in the list of current lobbies.);
+      console.log(data + " does not exist in the list of current lobbies.");
     }
   }
   
