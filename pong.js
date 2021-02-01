@@ -33,8 +33,8 @@ function newConnection(socket) {
     //Check if room exists
     if (data in gameRoomDict) {
       if (gameRoomDict.data.length < 2) {
-        console.log("You have joined the lobby named: " + data)
-        gameRoomDict.data = [gameRoomDict[data], socket.id];
+        console.log("You have joined the lobby named: " + data);
+        gameRoomDict.data = [gameRoomDict[data][0], socket.id];
         console.log(gameRoomDict[data]);
       }
       else {
