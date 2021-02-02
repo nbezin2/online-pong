@@ -34,7 +34,7 @@ function newConnection(socket) {
       if (gameRoomDict[data].length < 2) {
         console.log("You have joined the lobby named: " + data);
         gameRoomDict.data = gameRoomDict[data].push(socket.id);
-        io.broadcast.to(socket.id).emit('connected', data);
+        io.to(socket.id).emit('connected', data);
         console.log(gameRoomDict[data]);
       }
       else {
@@ -54,7 +54,7 @@ function newConnection(socket) {
     }
     else {
       gameRoomDict[data] = [socket.id];  
-      io.broadcast.to(socket.id).emit('connected', data);
+      io.to(socket.id).emit('connected', data);
     }
     
   }
