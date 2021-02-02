@@ -12,13 +12,33 @@ const io = socketIO(server);
 
 io.on('connection', newConnection);
 
-
+var clients = {};
 //Dictionary of all created rooms and the clients in it
 var gameRoomDict = {};
 
 function newConnection(socket) {
   
+  clients[socket.io] = "local";
   
+  socket.on('disconnect' dCon);
+  function dCon() {
+    //Check if the client that left was in a game room
+    if (!(clients[socket.io] == "local")) {
+          for (i=0; i < gameRoomDict[clients[socket.io]].length; i++) {
+            if (gameRoomDict[clients[socket.io]][i] === socket.io) {
+              gameRoomDict[clients[socket.io]].splice(i, 1);
+              break;
+            }
+          }
+          //If game room is empty than remove the game room from the list
+          if (gameRoomDict[clients[socket.io]].length < 1) {
+            gameRoomDict.delete(clients[socket.io]);
+          }
+    }
+    //remove client from the list
+    clients.delete(socket.id);
+    
+  }
   
   
   
@@ -32,6 +52,7 @@ function newConnection(socket) {
     //Check if room exists
     if (data in gameRoomDict) {
       if (gameRoomDict[data].length < 2) {
+        clients.(socket.io) = data;
         console.log("You have joined the lobby named: " + data);
         gameRoomDict.data = gameRoomDict[data].push(socket.id);
         io.to(socket.id).emit('connected', data);
@@ -53,6 +74,7 @@ function newConnection(socket) {
       console.log(data + " is already a game room.");   
     }
     else {
+      clients.(socket.io) = data;
       gameRoomDict[data] = [socket.id];  
       io.to(socket.id).emit('connected', data);
     }
