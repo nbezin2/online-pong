@@ -17,6 +17,7 @@ var clients = {};
 var gameRoomDict = {};
 
 function newConnection(socket) {
+  var sock = socket.io;
   
   clients[socket.io] = "local";
   
@@ -52,7 +53,7 @@ function newConnection(socket) {
     //Check if room exists
     if (data in gameRoomDict) {
       if (gameRoomDict[data].length < 2) {
-        clients.(socket.io) = data;
+        clients.socket.io = data;
         console.log("You have joined the lobby named: " + data);
         gameRoomDict.data = gameRoomDict[data].push(socket.id);
         io.to(socket.id).emit('connected', data);
@@ -74,7 +75,7 @@ function newConnection(socket) {
       console.log(data + " is already a game room.");   
     }
     else {
-      clients.(socket.io) = data;
+      clients.socket.io = data;
       gameRoomDict[data] = [socket.id];  
       io.to(socket.id).emit('connected', data);
     }
