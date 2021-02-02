@@ -20,7 +20,7 @@ function newConnection(socket) {
   
   clients[socket.io] = "local";
   
-  socket.on('disconnect' dCon);
+  socket.on('disconnect', dCon);
   function dCon() {
     //Check if the client that left was in a game room
     if (!(clients[socket.io] == "local")) {
