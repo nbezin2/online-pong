@@ -75,7 +75,7 @@ function newConnection(socket) {
       console.log(data + " is already a game room.");   
     }
     else {
-      clients.socket.io = data;
+      clients.sock = data;
       gameRoomDict[data] = [socket.id];  
       io.to(socket.id).emit('connected', data);
     }
