@@ -26,8 +26,10 @@ function newConnection(socket) {
     //Check if the client that left was in a game room
     if (!(clients[socket.io] == "local")) {
           for (i=0; i < gameRoomDict[clients[socket.io]].length; i++) {
-            if (gameRoomDict[clients[socket.io]][i] === socket.io) {
+            if (gameRoomDict[clients[socket.io]][i] == socket.io) {
+              console.log(gameRoomDict[clients[socket.io]]);
               gameRoomDict[clients[socket.io]].splice(i, 1);
+              console.log(gameRoomDict[clients[socket.io]]);
               break;
             }
           }
@@ -37,8 +39,9 @@ function newConnection(socket) {
           }
     }
     //remove client from the list
-    clients.delete(socket.id);
-    
+    console.log("clients connected" + clients);
+    clients.delete(socket.io);
+    console.log("clients connected" + clients);
   }
   
   
