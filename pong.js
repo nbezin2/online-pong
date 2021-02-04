@@ -35,12 +35,12 @@ function newConnection(socket) {
           }
           //If game room is empty than remove the game room from the list
           if (gameRoomDict[clients[socket.io]].length < 1) {
-            gameRoomDict.delete(clients[socket.io]);
+            delete gameRoomDict[clients[socket.io]];
           }
     }
     //remove client from the list
     console.log("clients connected" + clients);
-    clients.delete(socket.io);
+    delete clients[socket.io];
     console.log("clients connected" + clients);
   }
   
