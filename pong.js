@@ -28,7 +28,7 @@ function newConnection(socket) {
           for (i=0; i < gameRoomDict[clients[socket.io]].length; i++) {
             if (gameRoomDict[clients[socket.io]][i] == socket.io) {
               console.log(gameRoomDict[clients[socket.io]]);
-              gameRoomDict[clients[socket.io]].splice(i, 1);
+              gameRoomDict.clients[socket.io] = gameRoomDict[clients[socket.io]].splice(i, 1);
               console.log(gameRoomDict[clients[socket.io]]);
               break;
             }
@@ -39,9 +39,7 @@ function newConnection(socket) {
           }
     }
     //remove client from the list
-    console.log("clients connected" + clients);
     delete clients[socket.io];
-    console.log("clients connected" + clients);
   }
   
   
