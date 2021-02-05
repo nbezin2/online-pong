@@ -27,7 +27,9 @@ function newConnection(socket) {
     console.log("Trying to disconnect: " + clients[socket.id][0]);
     if (!(clients[socket.id][0] == "local")) {
           console.log("Client is in an online Room");
+          
           var room = clients[socket.id][0];
+          console.log(gameRoomDict[room]);
           for (i=0; i < gameRoomDict[room].length; i++) {
             console.log(gameRoomDict[room][i]);
             console.log("vs " + socket.id);
