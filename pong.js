@@ -29,7 +29,8 @@ function newConnection(socket) {
           console.log("Client is in an online Room");
           
           var room = clients[socket.id][0];
-          console.log(gameRoomDict[room]);
+          console.log("Room " + room);
+          console.log(gameRoomDict);
           for (i=0; i < gameRoomDict[room].length; i++) {
             console.log(gameRoomDict[room][i]);
             console.log("vs " + socket.id);
