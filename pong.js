@@ -26,8 +26,8 @@ function newConnection(socket) {
     //Check if the client that left was in a game room
     if (!(clients[socket.id] == "local")) {
           for (i=0; i < gameRoomDict[clients[socket.id]].length; i++) {
-            //console.log(gameRoomDict[clients[socket.id]][i]);
-            //console.log("vs " + socket.io);
+            console.log(gameRoomDict[clients[socket.id]][i]);
+            console.log("vs " + socket.id);
             if (gameRoomDict[clients[socket.id]][i] == socket.id) {
               console.log(gameRoomDict[clients[socket.id]]);
               gameRoomDict.clients[socket.id] = gameRoomDict[clients[socket.id]].splice(i, 1);
