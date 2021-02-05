@@ -18,7 +18,8 @@ var gameRoomDict = {};
 
 function newConnection(socket) {
   var sock = socket.id;
-  
+  console.log("Socket id: " + sock);
+  console.log("VS: " + socket.id);
   clients[socket.id] = "local";
   
   socket.on('disconnect', dCon);
