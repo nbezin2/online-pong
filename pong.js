@@ -27,19 +27,20 @@ function newConnection(socket) {
     console.log("Trying to disconnect: " + clients[socket.id][0]);
     if (!(clients[socket.id][0] == "local")) {
           console.log("Client is in an online Room");
-          for (i=0; i < gameRoomDict[clients[socket.id]].length; i++) {
-            console.log(gameRoomDict[clients[socket.id]][i]);
+          var room = clients[socket.id][0];
+          for (i=0; i < gameRoomDict[room].length; i++) {
+            console.log(gameRoomDict[room][i]);
             console.log("vs " + socket.id);
-            if (gameRoomDict[clients[socket.id]][i] == socket.id) {
-              console.log(gameRoomDict[clients[socket.id]]);
-              gameRoomDict.clients[socket.id] = gameRoomDict[clients[socket.id]].splice(i, 1);
-              console.log(gameRoomDict[clients[socket.id]]);
+            if (gameRoomDict[room][i] == socket.id) {
+              console.log(gameRoomDict[room]);
+              gameRoomDict.room = gameRoomDict[room].splice(i, 1);
+              console.log(gameRoomDict[room]);
               break;
             }
           }
           //If game room is empty than remove the game room from the list
           if (gameRoomDict[clients[socket.id]].length < 1) {
-            delete gameRoomDict[clients[socket.id]];
+            delete gameRoomDict[room];
           }
     }
     //remove client from the list
