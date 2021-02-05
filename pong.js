@@ -17,29 +17,31 @@ var clients = {};
 var gameRoomDict = {};
 
 function newConnection(socket) {
-  var sock = socket.io;
+  var sock = socket.id;
   
-  clients[socket.io] = "local";
+  clients[socket.id] = "local";
   
   socket.on('disconnect', dCon);
   function dCon() {
     //Check if the client that left was in a game room
-    if (!(clients[socket.io] == "local")) {
-          for (i=0; i < gameRoomDict[clients[socket.io]].length; i++) {
-            if (gameRoomDict[clients[socket.io]][i] == socket.io) {
-              console.log(gameRoomDict[clients[socket.io]]);
-              gameRoomDict.clients[socket.io] = gameRoomDict[clients[socket.io]].splice(i, 1);
-              console.log(gameRoomDict[clients[socket.io]]);
+    if (!(clients[socket.id] == "local")) {
+          for (i=0; i < gameRoomDict[clients[socket.id]].length; i++) {
+            //console.log(gameRoomDict[clients[socket.id]][i]);
+            //console.log("vs " + socket.io);
+            if (gameRoomDict[clients[socket.id]][i] == socket.id) {
+              console.log(gameRoomDict[clients[socket.id]]);
+              gameRoomDict.clients[socket.id] = gameRoomDict[clients[socket.id]].splice(i, 1);
+              console.log(gameRoomDict[clients[socket.id]]);
               break;
             }
           }
           //If game room is empty than remove the game room from the list
-          if (gameRoomDict[clients[socket.io]].length < 1) {
-            delete gameRoomDict[clients[socket.io]];
+          if (gameRoomDict[clients[socket.id]].length < 1) {
+            delete gameRoomDict[clients[socket.id]];
           }
     }
     //remove client from the list
-    delete clients[socket.io];
+    delete clients[socket.id];
   }
   
   
