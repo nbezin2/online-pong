@@ -41,7 +41,7 @@ function newConnection(socket) {
             }
           }
           //If game room is empty than remove the game room from the list
-          if (gameRoomDict[clients[socket.id]].length < 1) {
+          if (gameRoomDict[room].length < 1) {
             delete gameRoomDict[room];
           }
     }
