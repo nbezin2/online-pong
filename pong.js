@@ -18,6 +18,7 @@ var gameRoomDict = {};
 
 function newConnection(socket) {
   var sock = socket.id;
+  var room = "local";
   console.log("Socket id: " + sock);
   console.log("VS: " + socket.id);
   clients[socket.id] = "local";
@@ -29,9 +30,6 @@ function newConnection(socket) {
     if (!(clients[socket.id][0] == "local")) {
           console.log("Client is in an online Room");
           
-          var room = clients[socket.id];
-          console.log("Room " + room);
-          console.log(gameRoomDict);
           for (i=0; i < gameRoomDict[room].length; i++) {
             console.log(gameRoomDict[room][i]);
             console.log("vs " + socket.id);
@@ -63,6 +61,7 @@ function newConnection(socket) {
     //Check if room exists
     if (data in gameRoomDict) {
       if (gameRoomDict[data].length < 2) {
+        room = data;
         clients.sock = data;
         console.log("You have joined the lobby named: " + data);
         gameRoomDict.data = gameRoomDict[data].push(socket.id);
@@ -85,6 +84,7 @@ function newConnection(socket) {
       console.log(data + " is already a game room.");   
     }
     else {
+      room = data;
       clients.sock = data;
       gameRoomDict[data] = [socket.id];  
       io.to(socket.id).emit('connected', data);
