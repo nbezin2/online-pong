@@ -23,6 +23,7 @@ function newConnection(socket) {
   console.log("VS: " + socket.id);
   clients[socket.id] = "local";
   
+  //Client leaves the site
   socket.on('disconnect', dCon);
   function dCon() {
     //Check if the client that left was in a game room
@@ -90,9 +91,25 @@ function newConnection(socket) {
       gameRoomDict[data] = [socket.id];  
       io.to(socket.id).emit('connected', data);
     }
-    
   }
-
   
+  //Updating game visuals stuff
+  socket.on('updatePaddle', updatePaddle);
+  function updatePaddle(data) {
+    for (var i=0; i < gameRoomDict[room].length; i++) {
+      if (sock != gameRoomDict[room][i]) {
+        io.to(gameRoomDict[room][i]).emit('updatePaddle', data);
+      }
+    }
+  }
+  
+  socket.on('updateBall', updateBall);
+  function updateBall(data) { //data in the form: ballx, bally
+    for (var i=0; i < gameRoomDict[room].length; i++) {
+      if (sock != gameRoomDict[room][i]) {
+        io.to(gameRoomDict[room][i]).emit('updateBall', data);
+      }
+    }
+  }
 
 }
