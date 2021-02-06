@@ -27,7 +27,7 @@ function newConnection(socket) {
   function dCon() {
     //Check if the client that left was in a game room
     console.log("Trying to disconnect: " + clients[socket.id]);
-    if (!(clients[socket.id][0] == "local")) {
+    if (!(room == "local")) {
           console.log("Client is in an online Room");
           
           for (i=0; i < gameRoomDict[room].length; i++) {
@@ -46,6 +46,7 @@ function newConnection(socket) {
           }
     }
     //remove client from the list
+    console.log(clients);
     delete clients[socket.id];
   }
   
