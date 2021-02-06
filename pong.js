@@ -88,8 +88,9 @@ function newConnection(socket) {
     else {
       room = data;
       clients.sock = data;
-      gameRoomDict[data] = [socket.id];  
-      io.to(socket.id).emit('connected', data);
+      gameRoomDict[data] = [socket.id]; 
+      var stuff = [data, "host"]
+      io.to(socket.id).emit('connected', stuff);
     }
   }
   
