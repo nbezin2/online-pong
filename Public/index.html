@@ -311,14 +311,16 @@
       p2.show();
       ball.show();
 
-      p1.update();
-      p2.update();
-      ball.update();
+      //p1.update();
+      //p2.update();
+      //ball.update();
         
       if (host) {
         var ballI = ball.getX() + "," + ball.getY();
-        console.log(ballI);
         socket.emit('updateBall', ballI);
+        p1.update();
+        p2.update();
+        ball.update()
       }
     }
 
