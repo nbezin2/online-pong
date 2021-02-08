@@ -317,7 +317,8 @@
         
       if (host) {
         var ballI = ball.getX() + "," + ball.getY();
-        socket.emit(updateBall, ballI);
+        console.log(ballI);
+        socket.emit('updateBall', ballI);
       }
     }
 
