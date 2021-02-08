@@ -344,6 +344,8 @@
     socket.on('updateBall', updateBall);
     function updateBall(data) {
         var ballD = data.split(',');
+        console.log(data);
+        console.log(ballD);
         ball.setX(ballD[0]);
         ball.setY(ballD[1]);
     }
