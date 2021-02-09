@@ -209,6 +209,7 @@
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     var host = false;
+    var join = false;
 
     //Global Variables
     //var mainM = new Menu();
@@ -328,7 +329,7 @@
         ball.update()
       }
 
-      if (!host) {
+      if (join) {
         var paddleI = p2.getY();
         socket.emit('updateP2', paddleI);
         p2.update()
@@ -353,7 +354,10 @@
 
     socket.on('connectedG', connectedG);
     function connectedG(data) {
-        document.getElementById("gameRoom").innerHTML = "Game Room: " + data;
+        document.getElementById("gameRoom").innerHTML = "Game Room: " + data[0];
+        if (data[1] == "join") {
+            join = true;
+        }
     }
     
     socket.on('updateP2', updateP2);
