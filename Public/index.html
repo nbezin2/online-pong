@@ -356,6 +356,16 @@
         document.getElementById("gameRoom").innerHTML = "Game Room: " + data;
     }
     
+    socket.on('updateP2', updateP2);
+    function updateP2(data) {
+        p2.setY(data);
+    }
+    
+    socket.on('updateP1', updateP1);
+    function updateP1(data) {
+        p1.setY(data);
+    }
+    
     socket.on('updateBall', updateBall);
     function updateBall(data) {
         var ballD = data.split(',');
