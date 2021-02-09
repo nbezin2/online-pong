@@ -51,8 +51,6 @@ function newConnection(socket) {
     delete clients[socket.id];
   }
   
-  
-  
   //Connecting players
   socket.on('joinG', joinGame);
   socket.on('hostG', hostGame);
@@ -113,4 +111,22 @@ function newConnection(socket) {
     }
   }
 
+  socket.on('updateP1', updateP1);
+  function updateP1(data) {
+    for (var i=0; i < gameRoomDict[room].length; i++) {
+      if (sock != gameRoomDict[room][i]) {
+        io.to(gameRoomDict[room][i]).emit('updateP1', data);
+      }
+    }
+  }
+  
+  socket.on('updateP2', updateP2);
+  function updateP2(data) {
+    for (var i=0; i < gameRoomDict[room].length; i++) {
+      if (sock != gameRoomDict[room][i]) {
+        io.to(gameRoomDict[room][i]).emit('updateP2', data);
+      }
+    }
+  }
+  
 }
