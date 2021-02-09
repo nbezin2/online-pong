@@ -65,7 +65,8 @@ function newConnection(socket) {
         clients.sock = data;
         console.log("You have joined the lobby named: " + data);
         gameRoomDict.data = gameRoomDict[data].push(socket.id);
-        io.to(socket.id).emit('connectedG', data);
+        var stuff = [data, "join"]
+        io.to(socket.id).emit('connectedG', stuff);
         console.log(gameRoomDict[data]);
       }
       else {
