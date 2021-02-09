@@ -51,6 +51,10 @@
         Stuck() {
             this.dy = 0;
         }
+        
+        setY(y) {
+            this.y = y;
+        }
 
         setDY(dy) {
             this.dy = dy;
@@ -317,11 +321,19 @@
         
       if (host) {
         var ballI = ball.getX() + "," + ball.getY();
+        var paddleI = p1.getY();
         socket.emit('updateBall', ballI);
+        socket.emit('updateP1', paddleI);
         p1.update();
-        p2.update();
         ball.update()
       }
+
+      if (!host) {
+        var paddleI = p2.getY();
+        socket.emit('updateP2', paddleI);
+        p2.update()
+      }
+
     }
 
     setInterval(draw, 10);
