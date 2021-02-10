@@ -107,7 +107,6 @@
             this.dy = dy;
             this.w = d;
             this.h = d;
-
         }
 
         goal() {
@@ -127,6 +126,21 @@
             } 
         }
         
+        getDY() {
+            return this.dy;
+        }
+  
+        getDX() {
+            return this.dx;
+        }
+        setDX(dx) {
+            this.dx = dx;
+        }
+        
+        setDY(dy) {
+            this.dy = dy;
+        }
+
         setY(y) {
             this.y = y;
         }
@@ -321,7 +335,7 @@
       //ball.update();
         
       if (host) {
-        var ballI = ball.getX() + "," + ball.getY();
+        var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
         var paddleI = p1.getY();
         socket.emit('updateBall', ballI);
         socket.emit('updateP1', paddleI);
@@ -377,6 +391,8 @@
         console.log(ballD);
         ball.setX(ballD[0]);
         ball.setY(ballD[1]);
+        ball.setDX(ballD[2]);
+        ball.setDY(ball.D[3]);
     }
     
     
