@@ -237,6 +237,12 @@
     document.addEventListener("keyup", keyUpHandler, false);
 
     function keyDownHandler(e) {
+      if (host) {
+          if (e.key == r) {
+            socket.emit('reset');
+          }
+      }
+          
       if (e.key == "w" && p1U == false) {
         p1U = true;
         p1D = false;
@@ -372,6 +378,13 @@
         if (data[1] == "join") {
             join = true;
         }
+    }
+    
+    socket.on('reset', reset);
+    function reset() {
+        //reset ball
+        //reset paddle positions
+        //reset scores
     }
     
     socket.on('updateP2', updateP2);
