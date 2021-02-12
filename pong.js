@@ -130,4 +130,11 @@ function newConnection(socket) {
     }
   }
   
+  socket.on('reset', reset);
+  function reset() {
+    for (var i=0; i < gameRoomDict[room].length; i++) {
+      io.to(gameRoomDict[room][i]).emit('reset');
+    }
+  }
+  
 }
