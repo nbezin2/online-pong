@@ -383,7 +383,16 @@
     socket.on('reset', reset);
     function reset() {
         //reset ball
+        ball.goal();
+        
         //reset paddle positions
+        if (host) {
+            p1.setY((canvas.heigth/2) - 30);
+        }
+        else {
+            p2.setY((canvas.heigth/2) - 30);
+        }
+        
         //reset scores
     }
     
