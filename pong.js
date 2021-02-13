@@ -61,6 +61,7 @@ function newConnection(socket) {
     //Check if room exists
     if (data in gameRoomDict) {
       if (gameRoomDict[data].length < 2) {
+        io.to(gameDataDict[data][0]).emit('p2Joined');
         room = data;
         clients.sock = data;
         console.log("You have joined the lobby named: " + data);
