@@ -432,6 +432,8 @@
     
     socket.on('p2Joined', p2J);
     function p2J() {
+      console.log("Player 2 Joined!!!");
+      ball.goal();
       var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
       socket.emit('updateBall', ballI);
     }
