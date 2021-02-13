@@ -123,9 +123,11 @@
             }
             else {
                 this.dy = -3;
-            } 
-            var ballI = this.x + "," + this.y + "," + this.dx + "," + this.dy;
-            socket.emit('updateBall', ballI);
+            }
+            if (host) {
+                var ballI = this.x + "," + this.y + "," + this.dx + "," + this.dy;
+                socket.emit('updateBall', ballI);
+            }
         }
         
         getDY() {
