@@ -124,6 +124,8 @@
             else {
                 this.dy = -3;
             } 
+            var ballI = this.x + "," + this.y + "," + this.dx + "," + this.dy;
+            socket.emit('updateBall', ballI);
         }
         
         getDY() {
@@ -190,6 +192,7 @@
 
         update() {
             if (this.x <= 0-this.w) {
+                
                 this.goal();
             }
             if (this.x+this.w >= canvas.width+this.w) {
