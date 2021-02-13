@@ -288,8 +288,10 @@
         (ball.getY() < p1.getY()+p1.getH() && ball.getY()+ball.getH() > p1.getY())) {
         ball.setX(p1.getX() + p1.getW())
         ball.hit(p1.getY(), p1.getX(), p1.getH(), p1.getW());
-        var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
-        socket.emit('updateBall', ballI);
+        if (host) {
+          var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
+          socket.emit('updateBall', ballI);
+        }
       }
 
       //Right Paddle Collision
@@ -297,6 +299,10 @@
         (ball.getY() < p2.getY()+p2.getH() && ball.getY()+ball.getH() > p2.getY())) {
         ball.setX(p2.getX() - ball.getW());
         ball.hit(p2.getY(), p2.getX(), p2.getH(), p2.getW());
+        if (host) {
+          var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
+          socket.emit('updateBall', ballI);
+        }
       }
     }
 
@@ -340,7 +346,7 @@
 
       //p1.update();
       //p2.update();
-      ball.update();
+      //ball.update();
         
       if (host) {
         //var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
@@ -348,13 +354,14 @@
         //socket.emit('updateBall', ballI);
         socket.emit('updateP1', paddleI);
         p1.update();
-        //ball.update()
+        ball.update();
       }
 
       if (join) {
         var paddleI = p2.getY();
         socket.emit('updateP2', paddleI);
-        p2.update()
+        p2.update();
+        ball.update();
       }
 
     }
@@ -423,6 +430,11 @@
         ball.setDY(ballD[3]);
     }
     
+    socket.on('p2Joined', p2J);
+    function p2J() {
+      var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
+      socket.emit('updateBall', ballI);
+    }
     
     function connFun(data) {
         console.log(data);
