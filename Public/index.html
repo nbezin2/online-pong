@@ -354,9 +354,9 @@
       //ball.update();
         
       if (host) {
-        //var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
+        var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
         var paddleI = p1.getY();
-        //socket.emit('updateBall', ballI);
+        socket.emit('updateBall', ballI);
         socket.emit('updateP1', paddleI);
         p1.update();
         ball.update();
@@ -366,7 +366,7 @@
         var paddleI = p2.getY();
         socket.emit('updateP2', paddleI);
         p2.update();
-        ball.update();
+        ball.show();
       }
 
     }
