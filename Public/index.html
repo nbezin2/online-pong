@@ -8,7 +8,6 @@
     	canvas { background: #eee; display: block; margin: 0 auto; }
         
         .gameScore {
-            display:inline-block;
             font-size:40px;
             text-align: center;
         }
@@ -28,8 +27,9 @@
 <button onclick="checkConn()">Check Conn</button> <br>
 
 <div class="gameScore">   
-    <p style="float:left;" id="score1">0 -</p> 
-    <p style="float:right;" id="score2"> 0</p>
+    <p style="float:left;" id="score1">0</p> 
+    <p style="float:right;">-</p>
+    <p style="float:right;" id="score2">0</p>
 </div>
 <canvas id="myCanvas" width="480" height="320"></canvas>
     
