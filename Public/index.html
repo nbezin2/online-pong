@@ -430,10 +430,10 @@
         var ballD = data.split(',');
         console.log(data);
         console.log(ballD);
-        ball.setX(ballD[0]);
-        ball.setY(ballD[1]);
-        ball.setDX(ballD[2]);
-        ball.setDY(ballD[3]);
+        ball.setX(parseInt(ballD[0]));
+        ball.setY(parseInt(ballD[1]));
+        ball.setDX(parseInt(ballD[2]));
+        ball.setDY(parseInt(ballD[3]));
     }
     
     socket.on('p2Joined', p2J);
