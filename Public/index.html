@@ -454,6 +454,9 @@
       ball.goal();
       var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
       socket.emit('updateBall', ballI);
+      p1Score = 0;
+      p2Score = 0;
+      socket.emit('updateScore', [p1Score, p2Score]);
     }
     
     function connFun(data) {
