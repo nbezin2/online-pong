@@ -138,4 +138,11 @@ function newConnection(socket) {
     }
   }
   
+  socket.on('updateScore', score);
+  function updateScore() {
+    for (var i=0; i < gameRoomDict[room].length; i++) {
+      io.to(gameRoomDict[room][i]).emit('updateScore', score);
+    }
+  }
+  
 }
