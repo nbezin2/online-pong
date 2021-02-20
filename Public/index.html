@@ -424,7 +424,7 @@
     function updateScore(data) {
         p1Score = parseInt(data[0]);
         p2Score = parseInt(data[1]);
-        document.getElementById("gameScore").value = p1Score+" - "+p2Score;
+        document.getElementById("gameScore").innerHTML = p1Score+" - "+p2Score;
     }
     
     socket.on('updateP2', updateP2);
