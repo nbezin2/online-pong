@@ -35,7 +35,6 @@
 <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script type="text/javascript">
     var socket = io.connect(window.location.hostname);
-    var p1Score = 0, p2Score = 0;
 </script>
 <script type="text/javascript">
     //Paddle Class Code
@@ -372,7 +371,7 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       getInput();
       checkHit();
-      console.log(p1Score);
+      console.log(ball.getP1S());
       p1.show();
       p2.show();
       ball.show();
