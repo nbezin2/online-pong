@@ -245,6 +245,7 @@
     var p2 = new Paddle(canvas.width - 20, (canvas.height/2) - 30, 0, 20, 60);
     var ball = new Ball((canvas.width/2)-5, (canvas.height/2)-5, 2, 3, 10);
     var p1U = false, p1D = false, p2U = false, p2D = false;
+    var p1Score = 0, p2Score = 0;
 
     //keyDown and keyUp Handlers
     document.addEventListener("keydown", keyDownHandler, false);
@@ -357,16 +358,13 @@
       p1.show();
       p2.show();
       ball.show();
-
-      //p1.update();
-      //p2.update();
-      //ball.update();
         
       if (host) {
         var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
         var paddleI = p1.getY();
         socket.emit('updateBall', ballI);
         socket.emit('updateP1', paddleI);
+        socket.emit('updateScore', [p1Score, p2Score]);
         p1.update();
         ball.update();
       }
@@ -386,12 +384,7 @@
     
 <script type="text/javascript"> 
     //CLIENT SOCKET CODE
-    //<script type="text/javascript" src="/Public/Menu.js"
-    /*
-    var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
     
-    socket.emit('updateBall', ballI);
-    */
     socket.on('connectedH', connectedH);
     function connectedH(data) {
         document.getElementById("gameRoom").innerHTML = "Game Room: " + data[0];
@@ -422,6 +415,16 @@
         }
         
         //reset scores
+        p1Score = 0;
+        p2Score = 0;
+        socket.emit('updateScore', [p1Score, p2Score]);
+    }
+    
+    socket.on('updateScore', score);
+    function updateScore() {
+        p1Score = score[0]);
+        p2Score = score[1];
+        document.getElementById("gameScore").value = p1Score+" - "+p2Score;
     }
     
     socket.on('updateP2', updateP2);
