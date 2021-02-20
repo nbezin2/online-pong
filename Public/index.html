@@ -184,11 +184,9 @@
             var padMid = (pH / 2) + pY;
             var ballC = (this.h / 2) + this.y;
             if (ballC <= padMid) {
-                console.log("Hit Top Half");
                 this.dy = -5 + ((ballC-padTop)*(5 - 0) / (padMid-padTop) + 0);
             }
             else if (ballC > padMid) {
-                console.log("Hit Bottom Half");
                 this.dy = ((ballC-padMid)*(5 - 0) / (padBot-padMid) + 0);
             }
 
@@ -203,11 +201,12 @@
 
         update() {
             if (this.x <= 0-this.w) {
-                
                 this.goal();
+                p2Score += 1;
             }
             if (this.x+this.w >= canvas.width+this.w) {
                 this.goal();
+                p1Score += 1;
             }
             if (this.y <= 0) {
                 this.y = 0;
