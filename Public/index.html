@@ -420,10 +420,10 @@
         socket.emit('updateScore', [p1Score, p2Score]);
     }
     
-    socket.on('updateScore', score);
-    function updateScore() {
-        p1Score = score[0];
-        p2Score = score[1];
+    socket.on('updateScore', updateScore);
+    function updateScore(data) {
+        p1Score = data[0];
+        p2Score = data[1];
         document.getElementById("gameScore").value = p1Score+" - "+p2Score;
     }
     
