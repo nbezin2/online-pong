@@ -117,6 +117,8 @@
             this.dy = dy;
             this.w = d;
             this.h = d;
+            this.p1S = 0;
+            this.p2S = 0;
         }
 
         goal() {
@@ -138,6 +140,22 @@
                 var ballI = this.x + "," + this.y + "," + this.dx + "," + this.dy;
                 socket.emit('updateBall', ballI);
             }
+        }
+        
+        setP1S(s) {
+            this.p1S=s;
+        }
+        
+        setP2S(s) {
+            this.p2S=s;
+        }
+        
+        getP1S() {
+            return this.p1S;
+        }
+        
+        getP2S() {
+            return this.p2S;
         }
         
         getDY() {
@@ -203,11 +221,11 @@
         update() {
             if (this.x <= 0-this.w) {
                 this.goal();
-                p2Score += 1;
+                this.p2S += 1;
             }
             if (this.x+this.w >= canvas.width+this.w) {
                 this.goal();
-                p1Score += 1;
+                this.p1S += 1;
             }
             if (this.y <= 0) {
                 this.y = 0;
@@ -373,10 +391,7 @@
         var paddleI = p2.getY();
         socket.emit('updateP2', paddleI);
         p2.update();
-        ball.show();
-        console.log(ball.getX() + ", " + ball.getY());
       }
-
     }
 
     setInterval(draw, 10);
@@ -415,16 +430,16 @@
         }
         
         //reset scores
-        p1Score = 0;
-        p2Score = 0;
-        socket.emit('updateScore', [p1Score, p2Score]);
+        ball.setP1S(0);
+        ball.setP2S(0);
+        socket.emit('updateScore', [ball.getP1S(), ball.getP2S()]);
     }
     
     socket.on('updateScore', updateScore);
     function updateScore(data) {
-        p1Score = parseInt(data[0]);
-        p2Score = parseInt(data[1]);
-        document.getElementById("gameScore").innerHTML = p1Score+" - "+p2Score;
+        ball.setP1S(parseInt(data[0]));
+        ball.setP2S(parseInt(data[1]));
+        document.getElementById("gameScore").innerHTML = ball.getP1S()+" - "+ball.getP2S();
     }
     
     socket.on('updateP2', updateP2);
@@ -454,9 +469,9 @@
       ball.goal();
       var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
       socket.emit('updateBall', ballI);
-      p1Score = 0;
-      p2Score = 0;
-      socket.emit('updateScore', [p1Score, p2Score]);
+      ball.setP1S(0);
+      ball.setP2S(0);
+      socket.emit('updateScore', [ball.getP1S(), ball.getP2S()]);
     }
     
     function connFun(data) {
