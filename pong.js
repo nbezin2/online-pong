@@ -138,10 +138,10 @@ function newConnection(socket) {
     }
   }
   
-  socket.on('updateScore', score);
-  function updateScore() {
+  socket.on('updateScore', updateScore);
+  function updateScore(data) {
     for (var i=0; i < gameRoomDict[room].length; i++) {
-      io.to(gameRoomDict[room][i]).emit('updateScore', score);
+      io.to(gameRoomDict[room][i]).emit('updateScore', data);
     }
   }
   
