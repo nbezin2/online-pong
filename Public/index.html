@@ -41,6 +41,7 @@
         constructor(x, y, dy, w, h) {
             this.x = x;
             this.y = y;
+            this.sY = y;
             this.dx = 0;
             this.dy = dy;
             this.w = w;
@@ -48,6 +49,10 @@
 
         }
 
+        resetPosition() {
+            this.y = this.sY;
+        }
+            
         Up() {
             this.dy = -3;
         }
@@ -134,7 +139,7 @@
             else {
                 this.dy = -3;
             }
-            if (host) {
+            if (host || local) {
                 var ballI = this.x + "," + this.y + "," + this.dx + "," + this.dy;
                 socket.emit('updateBall', ballI);
                 var scoreI = this.p1S + "," + this.p2S;
@@ -255,6 +260,7 @@
     //Main Pong Game Code
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
+    var local = false;
     var host = false;
     var join = false;
 
@@ -271,7 +277,7 @@
     document.addEventListener("keyup", keyUpHandler, false);
 
     function keyDownHandler(e) {
-      if (host) {
+      if (host || local) {
           if (e.key == "r") {
             socket.emit('reset');
           }
@@ -322,7 +328,7 @@
         (ball.getY() < p1.getY()+p1.getH() && ball.getY()+ball.getH() > p1.getY())) {
         ball.setX(p1.getX() + p1.getW())
         ball.hit(p1.getY(), p1.getX(), p1.getH(), p1.getW());
-        if (host) {
+        if (host || local) {
           var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
           socket.emit('updateBall', ballI);
         }
@@ -333,7 +339,7 @@
         (ball.getY() < p2.getY()+p2.getH() && ball.getY()+ball.getH() > p2.getY())) {
         ball.setX(p2.getX() - ball.getW());
         ball.hit(p2.getY(), p2.getX(), p2.getH(), p2.getW());
-        if (host) {
+        if (host || local) {
           var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
           socket.emit('updateBall', ballI);
         }
@@ -377,14 +383,20 @@
       p1.show();
       p2.show();
       ball.show();
+      
+      if (local) {
+        p1.update();
+        p2.update();
+        ball.update();
+      }
         
       if (host) {
         var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
         var paddleI = p1.getY();
-        socket.emit('updateBall', ballI);
-        socket.emit('updateP1', paddleI);
         p1.update();
         ball.update();
+        socket.emit('updateBall', ballI);
+        socket.emit('updateP1', paddleI);
       }
 
       if (join) {
@@ -404,6 +416,8 @@
     function connectedH(data) {
         document.getElementById("gameRoom").innerHTML = "Game Room: " + data[0];
         if (data[1] == "host") {
+          join = false;
+          local = false;
           host = true;
         }
     }
@@ -412,6 +426,8 @@
     function connectedG(data) {
         document.getElementById("gameRoom").innerHTML = "Game Room: " + data[0];
         if (data[1] == "join") {
+            host = false;
+            local = false;
             join = true;
         }
     }
@@ -422,17 +438,14 @@
         ball.goal();
         
         //reset paddle positions
-        if (host) {
-            p1.setY((canvas.heigth/2) - 30);
-        }
-        else {
-            p2.setY((canvas.heigth/2) - 30);
-        }
+        p1.resetPosition();
+        p2.resetPosition();
         
         //reset scores
         ball.setP1S(0);
         ball.setP2S(0);
-        socket.emit('updateScore', [ball.getP1S(), ball.getP2S()]);
+        var scoreI = ball.getP1S()+" - "+ball.getP2S();
+        socket.emit('updateScore', scoreI);
     }
     
     socket.on('updateScore', updateScore);
@@ -481,7 +494,15 @@
     }
 
     function startLocalGame() {
-        console.log("");
+        console.log("Local Game Started");
+        local = true;
+        host = false;
+        join = false;
+        p1.resetPosition();
+        p2.resetPosition();
+        ball.setP1S(0);
+        ball.setP2S(0);
+        ball.goal();
     }
     
     function joinGame() {
