@@ -221,12 +221,12 @@
 
         update() {
             if (this.x <= 0-this.w) {
-                this.goal();
                 this.p2S += 1;
+                this.goal();
             }
             if (this.x+this.w >= canvas.width+this.w) {
-                this.goal();
                 this.p1S += 1;
+                this.goal();
             }
             if (this.y <= 0) {
                 this.y = 0;
