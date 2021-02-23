@@ -19,25 +19,19 @@ var gameRoomDict = {};
 function newConnection(socket) {
   var sock = socket.id;
   var room = "local";
-  console.log("Socket id: " + sock);
-  console.log("VS: " + socket.id);
+  console.log("Connected socket id: " + sock);
   clients[socket.id] = "local";
   
   //Client leaves the site
   socket.on('disconnect', dCon);
   function dCon() {
     //Check if the client that left was in a game room
-    console.log("Trying to disconnect: " + clients[socket.id]);
     if (!(room == "local")) {
           console.log("Client is in an online Room");
           
           for (i=0; i < gameRoomDict[room].length; i++) {
-            console.log(gameRoomDict[room][i]);
-            console.log("vs " + socket.id);
             if (gameRoomDict[room][i] == socket.id) {
-              console.log(gameRoomDict[room]);
               gameRoomDict.room = gameRoomDict[room].splice(i, 1);
-              console.log(gameRoomDict[room]);
               break;
             }
           }
@@ -47,7 +41,6 @@ function newConnection(socket) {
           }
     }
     //remove client from the list
-    console.log(clients);
     delete clients[socket.id];
   }
   
@@ -141,6 +134,7 @@ function newConnection(socket) {
   socket.on('updateScore', updateScore);
   function updateScore(data) {
     for (var i=0; i < gameRoomDict[room].length; i++) {
+      console.log(data);
       io.to(gameRoomDict[room][i]).emit('updateScore', data);
     }
   }
