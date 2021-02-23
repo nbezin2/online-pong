@@ -134,7 +134,6 @@ function newConnection(socket) {
   socket.on('updateScore', updateScore);
   function updateScore(data) {
     for (var i=0; i < gameRoomDict[room].length; i++) {
-      console.log(data);
       io.to(gameRoomDict[room][i]).emit('updateScore', data);
     }
   }
