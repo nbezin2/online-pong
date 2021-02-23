@@ -378,9 +378,10 @@
       if (host) {
         var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
         var paddleI = p1.getY();
+        var scoreI = ball.getP1S() + "," + ball.getP2S();
         socket.emit('updateBall', ballI);
         socket.emit('updateP1', paddleI);
-        socket.emit('updateScore', [ball.getP1S(), ball.getP2S()]);
+        socket.emit('updateScore', scoreI);
         p1.update();
         ball.update();
       }
@@ -435,8 +436,9 @@
     
     socket.on('updateScore', updateScore);
     function updateScore(data) {
-        ball.setP1S(data[0]);
-        ball.setP2S(data[1]);
+        var scoreI = data.split(',');
+        ball.setP1S(parseInt(scoreI[0]));
+        ball.setP2S(parseInt(scoreI[1]));
         document.getElementById("gScore").innerHTML = ball.getP1S()+" - "+ball.getP2S();
     }
     
@@ -469,7 +471,8 @@
       socket.emit('updateBall', ballI);
       ball.setP1S(0);
       ball.setP2S(0);
-      socket.emit('updateScore', [ball.getP1S(), ball.getP2S()]);
+      var scoreI = ball.getP1S()+","+ball.getP2S();
+      socket.emit('updateScore', scoreI);
     }
     
     function connFun(data) {
