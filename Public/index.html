@@ -381,7 +381,7 @@
         var paddleI = p1.getY();
         socket.emit('updateBall', ballI);
         socket.emit('updateP1', paddleI);
-        socket.emit('updateScore', [p1Score, p2Score]);
+        socket.emit('updateScore', [ball.getP1S(), ball.getP2S()]);
         p1.update();
         ball.update();
       }
