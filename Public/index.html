@@ -139,12 +139,11 @@
             else {
                 this.dy = -3;
             }
-            if (host || local) {
+            if (host) {
                 var ballI = this.x + "," + this.y + "," + this.dx + "," + this.dy;
                 socket.emit('updateBall', ballI);
                 var scoreI = this.p1S + "," + this.p2S;
                 socket.emit('updateScore', scoreI);
-                
             }
         }
         
@@ -374,7 +373,7 @@
         p2.Stuck();
       }
     }
-
+    
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       getInput();
@@ -388,6 +387,7 @@
         p1.update();
         p2.update();
         ball.update();
+        document.getElementById("gScore").innerHTML = ball.getP1S()+" - "+ball.getP2S();
       }
         
       if (host) {
@@ -495,14 +495,16 @@
 
     function startLocalGame() {
         console.log("Local Game Started");
+        socket.emit('localG');
+        document.getElementById("gameRoom").innerHTML = "Game Room: Local";
         local = true;
         host = false;
         join = false;
         p1.resetPosition();
         p2.resetPosition();
+        ball.goal();
         ball.setP1S(0);
         ball.setP2S(0);
-        ball.goal();
     }
     
     function joinGame() {
