@@ -137,6 +137,9 @@
             if (host) {
                 var ballI = this.x + "," + this.y + "," + this.dx + "," + this.dy;
                 socket.emit('updateBall', ballI);
+                var scoreI = this.p1S + "," + this.p2S;
+                socket.emit('updateScore', scoreI);
+                
             }
         }
         
@@ -378,10 +381,8 @@
       if (host) {
         var ballI = ball.getX() + "," + ball.getY() + "," + ball.getDX() + "," + ball.getDY();
         var paddleI = p1.getY();
-        var scoreI = ball.getP1S() + "," + ball.getP2S();
         socket.emit('updateBall', ballI);
         socket.emit('updateP1', paddleI);
-        socket.emit('updateScore', scoreI);
         p1.update();
         ball.update();
       }
