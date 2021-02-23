@@ -27,9 +27,8 @@
 <button onclick="createGame()">Create Game</button>
 <button onclick="checkConn()">Check Conn</button> <br>
 
-<div class="gameScore">   
-    <p id="gameScore">0 - 0</p> 
-</div>
+
+<p style="text-align:center" id="gScore">0 - 0</p> <br>
 <canvas id="myCanvas" width="480" height="320"></canvas>
     
 <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
@@ -436,9 +435,9 @@
     
     socket.on('updateScore', updateScore);
     function updateScore(data) {
-        ball.setP1S(parseInt(data[0]));
-        ball.setP2S(parseInt(data[1]));
-        document.getElementById("gameScore").innerHTML = ball.getP1S()+" - "+ball.getP2S();
+        ball.setP1S(data[0]);
+        ball.setP2S(data[1]);
+        document.getElementById("gScore").innerHTML = ball.getP1S()+" - "+ball.getP2S();
     }
     
     socket.on('updateP2', updateP2);
