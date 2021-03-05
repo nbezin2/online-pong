@@ -16,6 +16,9 @@ var clients = {};
 //Dictionary of all created rooms and the clients in it
 var gameRoomDict = {};
 
+
+
+
 function newConnection(socket) {
   var sock = socket.id;
   var room = "local";
@@ -72,18 +75,32 @@ function newConnection(socket) {
     }
   }
   
+  function roomAdjust() {
+    if (room != "local") {
+      for (i=0; i < gameRoomDict[room].length; i++) {
+        gameRoomDict[room][i]
+            if (gameRoomDict[room][i] == socket.id) {
+              gameRoomDict.room = gameRoomDict[room].splice(i, 1);
+            }
+      }
+    }
+  }
+  
   //data should be in the form of: roomName
   function hostGame(data) {
     
-    if (data in gameRoomDict) {
-      console.log(data + " is already a game room.");   
-    }
-    else {
-      room = data;
-      clients.sock = data;
-      gameRoomDict[data] = [socket.id]; 
-      var stuff = [data, "host"]
-      io.to(socket.id).emit('connectedH', stuff);
+    if (data != "" || data.toLowerCase() != "local") {
+      if (data in gameRoomDict) {
+        console.log(data + " is already a game room.");   
+      }
+      else {
+        roomAdust();
+        room = data;
+        clients.sock = data;
+        gameRoomDict[data] = [socket.id]; 
+        var stuff = [data, "host"]
+        io.to(socket.id).emit('connectedH', stuff);
+      }
     }
   }
   
