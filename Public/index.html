@@ -446,7 +446,7 @@
         ball.setP1S(0);
         ball.setP2S(0);
         var scoreI = ball.getP1S()+" - "+ball.getP2S();
-        socket.emit('updateScore', scoreI);
+        socket.emit('updateScore', ball.getP1S()+","+ball.getP2S());
     }
     
     socket.on('updateScore', updateScore);
