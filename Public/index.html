@@ -484,6 +484,8 @@
         
         document.getElementById("gScore").innerHTML = ball.getP1S()+" - "+ball.getP2S();
         document.getElementById("gameRoom").innerHTML = "Game Room: Local";
+        
+        socket.emit('backToLocal');
     }
     
     socket.on('updateBall', updateBall);
