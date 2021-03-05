@@ -42,11 +42,8 @@ function newConnection(socket) {
     if (!(room == "local")) {
           console.log("Client is in an online Room");
           
+          //If a player leaves the room than remove all players and put remaining player in a local room
           roomAdjust();
-          //If game room is empty than remove the game room from the list
-          if (gameRoomDict[room].length < 1) {
-            delete gameRoomDict[room];
-          }
     }
     //remove client from the list
     delete clients[socket.id];
