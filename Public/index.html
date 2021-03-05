@@ -467,6 +467,25 @@
         p1.setY(data);
     }
     
+    socket.on('backToLocal', backToLocal);
+    function backToLocal() {
+        local = true;
+        host = false;
+        join = false;
+        
+        ball.goal();
+        
+        //reset paddle positions
+        p1.resetPosition();
+        p2.resetPosition();
+        
+        ball.setP1S(0);
+        ball.setP2S(0);
+        
+        document.getElementById("gScore").innerHTML = ball.getP1S()+" - "+ball.getP2S();
+        
+    }
+    
     socket.on('updateBall', updateBall);
     function updateBall(data) {
         var ballD = data.split(',');
