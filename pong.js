@@ -112,18 +112,22 @@ function newConnection(socket) {
   
   socket.on('updateBall', updateBall);
   function updateBall(data) { //data in the form: ballx, bally
-    for (var i=0; i < gameRoomDict[room].length; i++) {
-      if (sock != gameRoomDict[room][i]) {
-        io.to(gameRoomDict[room][i]).emit('updateBall', data);
+    if (room != "local") {
+      for (var i=0; i < gameRoomDict[room].length; i++) {
+        if (sock != gameRoomDict[room][i]) {
+          io.to(gameRoomDict[room][i]).emit('updateBall', data);
+        }
       }
     }
   }
 
   socket.on('updateP1', updateP1);
   function updateP1(data) {
-    for (var i=0; i < gameRoomDict[room].length; i++) {
-      if (sock != gameRoomDict[room][i]) {
-        io.to(gameRoomDict[room][i]).emit('updateP1', data);
+    if (room != "local") {
+      for (var i=0; i < gameRoomDict[room].length; i++) {
+        if (sock != gameRoomDict[room][i]) {
+          io.to(gameRoomDict[room][i]).emit('updateP1', data);
+        }
       }
     }
   }
