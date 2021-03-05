@@ -25,6 +25,16 @@ function newConnection(socket) {
   console.log("Connected socket id: " + sock);
   clients[socket.id] = "local";
   
+  function roomAdjust() {
+    if (room != "local") {
+      for (i=0; i < gameRoomDict[room].length; i++) {
+        io.to(gameRoomDict[room][i]).emit('backToLocal');
+        clients[gameRoomDict[room][i]] = "local";
+      }
+      delete gameRoomDict[room];
+    }
+  }
+  
   //Client leaves the site
   socket.on('disconnect', dCon);
   function dCon() {
@@ -32,12 +42,7 @@ function newConnection(socket) {
     if (!(room == "local")) {
           console.log("Client is in an online Room");
           
-          for (i=0; i < gameRoomDict[room].length; i++) {
-            if (gameRoomDict[room][i] == socket.id) {
-              gameRoomDict.room = gameRoomDict[room].splice(i, 1);
-              break;
-            }
-          }
+          roomAdjust();
           //If game room is empty than remove the game room from the list
           if (gameRoomDict[room].length < 1) {
             delete gameRoomDict[room];
@@ -75,17 +80,6 @@ function newConnection(socket) {
     }
   }
   
-  function roomAdjust() {
-    if (room != "local") {
-      for (i=0; i < gameRoomDict[room].length; i++) {
-        gameRoomDict[room][i]
-            if (gameRoomDict[room][i] == socket.id) {
-              gameRoomDict.room = gameRoomDict[room].splice(i, 1);
-            }
-      }
-    }
-  }
-  
   //data should be in the form of: roomName
   function hostGame(data) {
     
@@ -94,7 +88,7 @@ function newConnection(socket) {
         console.log(data + " is already a game room.");   
       }
       else {
-        roomAdust();
+        roomAdjust();
         room = data;
         clients.sock = data;
         gameRoomDict[data] = [socket.id]; 
