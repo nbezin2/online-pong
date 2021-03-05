@@ -35,6 +35,11 @@ function newConnection(socket) {
     }
   }
   
+  socket.on('backToLocal', backToLocal);
+  function backToLocal() {
+    room = "local";
+  }
+  
   //Client leaves the site
   socket.on('disconnect', dCon);
   function dCon() {
@@ -125,9 +130,11 @@ function newConnection(socket) {
   
   socket.on('updateP2', updateP2);
   function updateP2(data) {
-    for (var i=0; i < gameRoomDict[room].length; i++) {
-      if (sock != gameRoomDict[room][i]) {
-        io.to(gameRoomDict[room][i]).emit('updateP2', data);
+    if (room != "local") {
+      for (var i=0; i < gameRoomDict[room].length; i++) {
+        if (sock != gameRoomDict[room][i]) {
+          io.to(gameRoomDict[room][i]).emit('updateP2', data);
+        }
       }
     }
   }
